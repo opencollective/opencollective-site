@@ -1,15 +1,16 @@
 {
-  "name": "react-boilerplate",
-  "version": "3.2.1",
-  "description": "A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices",
+  "name": "opencollective-site",
+  "version": "1.0.0",
+  "description": "Opencollective is a transparent ledger for your group",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mxstbr/react-boilerplate.git"
+    "url": "git://github.com/opencollective/opencollective-site"
   },
   "engines": {
-    "npm": ">=3"
+    "node": "6.2.2",
+    "npm": "3.9.5"
   },
-  "author": "Max Stoiber",
+  "author": "Aseem Sood, Xavier Damman",
   "license": "MIT",
   "scripts": {
     "analyze:clean": "rimraf stats.json",
