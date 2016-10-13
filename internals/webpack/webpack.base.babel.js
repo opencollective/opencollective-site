@@ -7,6 +7,7 @@ const webpack = require('webpack');
 
 // PostCSS plugins
 const cssnext = require('postcss-cssnext');
+const atImport = require('postcss-import');
 const postcssFocus = require('postcss-focus');
 const postcssReporter = require('postcss-reporter');
 
@@ -38,6 +39,7 @@ module.exports = (options) => ({
       loaders: ['style-loader', 'css-loader'],
     }, {
       test: /\.(eot|svg|ttf|woff|woff2)$/,
+      exclude: /sprite.svg$/,
       loader: 'file-loader',
     }, {
       test: /\.(jpg|png|gif)$/,
@@ -54,12 +56,16 @@ module.exports = (options) => ({
     }, {
       test: /\.(mp4|webm)$/,
       loader: 'url-loader?limit=10000',
+    }, {
+      test: /sprite.svg$/,
+      loader: 'svg-sprite-loader',
     }],
   },
   plugins: options.plugins.concat([
     new webpack.ProvidePlugin({
       // make fetch available
-      fetch: 'exports?self.fetch!whatwg-fetch',
+      Promise: 'bluebird',
+      fetch: 'exports?window.fetch!whatwg-fetch',
     }),
 
     // Always expose NODE_ENV to webpack, in order to use `process.env.NODE_ENV`
@@ -70,8 +76,10 @@ module.exports = (options) => ({
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ]),
   postcss: () => [
+    atImport(),
     postcssFocus(), // Add a :focus to every :hover
     cssnext({ // Allow future CSS features to be used, also auto-prefixes the CSS...
       browsers: ['last 2 versions', 'IE > 10'], // ...based on this browser list
@@ -95,6 +103,6 @@ module.exports = (options) => ({
   },
   devtool: options.devtool,
   target: 'web', // Make web variables accessible to webpack, e.g. window
-  stats: false, // Don't show stats in the console
+  stats: true, // Show stats in the console
   progress: true,
 });
