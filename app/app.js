@@ -28,6 +28,14 @@ import { translationMessages } from './i18n';
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
 import 'sanitize.css/sanitize.css';
 
+// Load base css files
+import './css/vendors/normalize.css';
+import './css/base/body.css';
+import './css/base/fonts.css';
+import './css/base/forms.css';
+import './css/base/input.css';
+import './css/base/utils.css';
+
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router
 // Optionally, this could be changed to leverage a created history
@@ -67,7 +75,7 @@ const render = (translatedMessages) => {
         />
       </LanguageProvider>
     </Provider>,
-    document.getElementById('app')
+    document.getElementById('content')
   );
 };
 
