@@ -7,6 +7,17 @@ import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
+import createLogger from 'redux-logger';
+
+const options = {};
+
+if (process.env.NODE_ENV === 'production') {
+  // Only show failure on production
+  options.predicate = (getState, action) => {
+    return `${action.type}`.match(/FAILURE/)
+  };
+}
+const logger = createLogger(options);
 
 const sagaMiddleware = createSagaMiddleware();
 const devtools = window.devToolsExtension || (() => (noop) => noop);
@@ -18,6 +29,7 @@ export default function configureStore(initialState = {}, history) {
   const middlewares = [
     sagaMiddleware,
     routerMiddleware(history),
+    logger,
   ];
 
   const enhancers = [
