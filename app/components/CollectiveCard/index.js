@@ -10,6 +10,8 @@ const DEFAULT_LOGOS = [
   '/static/images/repo.svg',
 ];
 
+import styles from './styles.css';
+
 export default class CollectiveCard extends Component {
 
   mapCollectiveCardProps() {
@@ -90,25 +92,25 @@ export default class CollectiveCard extends Component {
     }
 
     return (
-      <div key={ id } className={`CollectiveCard ${className}`}>
+      <div key={ id } className={styles.CollectiveCard}>
         <a href={publicUrl}>
           <div>
-            <div className='CollectiveCard-head'>
-              <div className='CollectiveCard-background' style={{backgroundImage: `url(${resizeImage(backgroundImage, 320) || DEFAULT_BG})`}}>
-                <div className='CollectiveCard-image' style={{backgroundImage: `url(${logo || DEFAULT_LOGOS[id%DEFAULT_LOGOS.length]})`}}></div>
+            <div className={styles.head}>
+              <div className={styles.background} style={{backgroundImage: `url(${resizeImage(backgroundImage, 320) || DEFAULT_BG})`}}>
+                <div className={styles.image} style={{backgroundImage: `url(${logo || DEFAULT_LOGOS[id%DEFAULT_LOGOS.length]})`}}></div>
               </div>
             </div>
-            <div className='CollectiveCard-body'>
-              <div className='CollectiveCard-name'>{name}</div>
-              <div className='CollectiveCard-description'>{i18n.getString('missionTo')} {mission || description}</div>
+            <div className={styles.body}>
+              <div className={styles.name}>{name}</div>
+              <div className={styles.description}>{i18n.getString('missionTo')} {mission || description}</div>
             </div>
-            <div className='CollectiveCard-footer'>
-              <div className='clearfix mt2'>
+            <div className={styles.footer}>
+              <div>
               { stats.map((stat) =>
-                <div key={stat.label} className={`col col-${12/(stats.length||1)}`}>
-                  <div className='CollectiveCard-metric'>
-                    <div className='CollectiveCard-metric-value'>{stat.value}</div>
-                    <div className='CollectiveCard-metric-label'>{stat.label}</div>
+                <div>
+                  <div className={styles.metric}>
+                    <div className={styles.value}>{stat.value}</div>
+                    <div className={styles.label}>{stat.label}</div>
                   </div>
                 </div>
               ) }
@@ -134,7 +136,7 @@ CollectiveCard.propTypes = {
   backersAndSponsorsCount: PropTypes.number,
   yearlyIncome: PropTypes.number,
   currency: PropTypes.string,
-  i18n: PropTypes.object,
+  i18n: PropTypes.object.isRequired,
   isSponsor: PropTypes.bool,
   isCollectiveOnProfile: PropTypes.bool,
   backgroundImage: PropTypes.string,
@@ -143,3 +145,25 @@ CollectiveCard.propTypes = {
   totalDonations: PropTypes.number,
   id: PropTypes.number
 };
+
+CollectiveCard.defaultProps = {
+  name: '',
+  description: '',
+  logo: '',
+  publicUrl: '',
+  contributorsCount: 0,
+  membersCount: 0,
+  backersCount: 0,
+  sponsorsCount: 0,
+  backersAndSponsorsCount: 0,
+  yearlyIncome: 0,
+  currency: '',
+  i18n: { getString: (str) => str },
+  isSponsor: false,
+  isCollectiveOnProfile: false,
+  backgroundImage: '',
+  mission: '',
+  collectives: '',
+  totalDonations: 0,
+  id: 0,
+}

@@ -12,31 +12,37 @@ const loadModule = (cb) => (componentModule) => {
   cb(null, componentModule.default);
 };
 
+const importModules = (name) => {
+  return Promise.all([
+    System.import(`containers/${name}/reducer`),
+    System.import(`containers/${name}/sagas`),
+    System.import(`containers/${name}`),
+  ])
+  .catch(errorLoading);
+}
+
 export default function createRoutes(store) {
   // Create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store); // eslint-disable-line no-unused-vars
-
   return [
     {
       path: '/',
       name: 'home',
       getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          System.import('containers/HomePage/reducer'),
-          System.import('containers/HomePage/sagas'),
-          System.import('containers/HomePage'),
-        ]);
-
         const renderRoute = loadModule(cb);
-
-        importModules.then(([reducer, sagas, component]) => {
+        importModules('HomePage').then(([reducer, sagas, component]) => {
           injectReducer('home', reducer.default);
           injectSagas(sagas.default);
-
           renderRoute(component);
         });
-
-        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/component/:component',
+      name: 'component',
+      getComponent(nextState, cb) {
+        System.import(`containers/RenderComponent`)
+          .then(loadModule(cb))
+          .catch(errorLoading);
       },
     }, {
       path: '*',
