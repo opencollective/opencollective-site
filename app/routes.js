@@ -19,7 +19,7 @@ const importModules = (name) => {
     System.import(`containers/${name}`),
   ])
   .catch(errorLoading);
-}
+};
 
 export default function createRoutes(store) {
   // Create reusable async injectors using getAsyncInjectors factory
@@ -37,10 +37,10 @@ export default function createRoutes(store) {
         });
       },
     }, {
-      path: '/component/:component',
+      path: '/components/:component',
       name: 'component',
       getComponent(nextState, cb) {
-        System.import(`containers/RenderComponent`)
+        System.import('containers/RenderComponent')
           .then(loadModule(cb))
           .catch(errorLoading);
       },

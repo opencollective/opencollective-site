@@ -16,7 +16,8 @@ export default class RenderComponent extends React.Component { // eslint-disable
 
   constructor(props) {
     super(props);
-    this.component = Components[this.props.params.component];
+    const { params } = this.props;
+    this.component = Components[params.component];
   }
 
   render() {
@@ -25,7 +26,7 @@ export default class RenderComponent extends React.Component { // eslint-disable
   }
 }
 
-RenderComponent.PropTypes = {
+RenderComponent.propTypes = {
   params: React.PropTypes.object,
 };
 
