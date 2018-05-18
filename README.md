@@ -1,5 +1,7 @@
 # OpenCollective (new) Website
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/opencollective/opencollective-site.svg)](https://greenkeeper.io/)
+
 [![Circle CI](https://circleci.com/gh/OpenCollective/opencollective-site/tree/master.svg?style=shield&circle-token=529943730e6598363053a54a31969aa0278f0f33)](https://circleci.com/gh/OpenCollective/opencollective-site/tree/master)
 [![Slack Status](https://slack.opencollective.com/badge.svg)](https://slack.opencollective.com)
 [![Gitter chat](https://badges.gitter.im/OpenCollective/OpenCollective.svg)](https://gitter.im/OpenCollective/OpenCollective)
